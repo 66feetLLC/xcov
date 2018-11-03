@@ -10,7 +10,8 @@ module Xcov
     def initialize(name, coverage, files)
       @name = CGI::escapeHTML(name)
       @files = files
-      @coverage = coverage
+      #@coverage = coverage
+      @coverage = files.count  == 0 ? 0.0 : files.reduce(0) { |acc, file| acc + file.coverage.to_f } / files.count
       @displayable_coverage = self.create_displayable_coverage
       @coverage_color = self.create_coverage_color
       @id = Target.create_id(name)
